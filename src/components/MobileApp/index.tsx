@@ -1,10 +1,14 @@
+'use client';
+
 import Image from 'next/image';
 import { Map, Zap, Gift, CreditCard } from 'lucide-react';
+import { motion, Variants } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
 
 const features = [
   {
     name: 'Nearby Stations',
-    description: 'Discover and navigate to the nearest charging stations with ease, ensuring you\'re always powered up on the go.',
+    description: "Discover and navigate to the nearest charging stations with ease, ensuring you're always powered up on the go.",
     icon: Map,
   },
   {
@@ -24,30 +28,66 @@ const features = [
   },
 ];
 
+// Animation Variants
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+      ease: 'easeOut',
+    },
+  },
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: 'easeInOut',
+    },
+  },
+};
+
+
 export function MobileApp() {
+    const { ref, inView } = useInView({
+        triggerOnce: true,
+        threshold: 0.1,
+      });
+
   return (
-    <section className="bg-white py-24 sm:py-32">
+    <motion.section
+      ref={ref}
+      variants={containerVariants}
+      initial="hidden"
+      animate={inView ? 'visible' : 'hidden'}
+      className="bg-white py-24 sm:py-32"
+    >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Section Header */}
-        <div className="mx-auto max-w-2xl text-center">
+        <motion.div variants={itemVariants} className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
             Mobile Application
           </h2>
           <p className="mt-6 text-lg leading-8 text-gray-600">
             Stay tuned mobile application is coming soon
           </p>
-        </div>
+        </motion.div>
 
         {/* Main 3-column grid */}
         <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
           <div className="grid grid-cols-1 items-center gap-x-8 gap-y-16 lg:grid-cols-3">
             
             {/* Left Column Features */}
-            <div className="flex flex-col gap-y-10">
+            <motion.div variants={itemVariants} className="flex flex-col gap-y-10">
               {features.slice(0, 2).map((feature) => (
                 <div key={feature.name} className="flex items-start gap-x-4">
                   <div className="flex-shrink-0">
-                    <feature.icon className="h-8 w-8 text-green-200" aria-hidden="true" />
+                    <feature.icon className="h-8 w-8 text-brand-green" aria-hidden="true" />
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold leading-7 text-gray-900">{feature.name}</h3>
@@ -55,10 +95,10 @@ export function MobileApp() {
                   </div>
                 </div>
               ))}
-            </div>
+            </motion.div>
 
             {/* Center Column Image */}
-            <div className="flex justify-center order-first lg:order-none">
+            <motion.div variants={itemVariants} className="flex justify-center order-first lg:order-none">
               <Image
                 src="/images/mobile.png"
                 alt="Mobile app screenshot"
@@ -66,14 +106,14 @@ export function MobileApp() {
                 height={613}
                 className="rounded-2xl shadow-2xl"
               />
-            </div>
+            </motion.div>
 
             {/* Right Column Features */}
-            <div className="flex flex-col gap-y-10">
+            <motion.div variants={itemVariants} className="flex flex-col gap-y-10">
               {features.slice(2, 4).map((feature) => (
                 <div key={feature.name} className="flex items-start gap-x-4">
                   <div className="flex-shrink-0">
-                    <feature.icon className="h-8 w-8 text-green-200" aria-hidden="true" />
+                    <feature.icon className="h-8 w-8 text-brand-green" aria-hidden="true" />
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold leading-7 text-gray-900">{feature.name}</h3>
@@ -81,11 +121,12 @@ export function MobileApp() {
                   </div>
                 </div>
               ))}
-            </div>
+            </motion.div>
             
           </div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }
+

@@ -3,6 +3,8 @@
 import Image from 'next/image';
 import { Disclosure, Transition } from '@headlessui/react';
 import { MapPin, Calendar, ChevronUp, ChevronRight } from 'lucide-react';
+import { motion, Variants } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
 
 const contactInfo = [
   {
@@ -31,7 +33,7 @@ const faqItems = [
   {
     question: 'What makes Power Up Plaza different from other charging stations?',
     answer:
-      "We&apos;re more than just chargers; we&apos;re a community hub. We partner with local food vendors and provide a comfortable space to relax, turning your charging time into a productive and enjoyable break.",
+      "We're more than just chargers; we're a community hub. We partner with local food vendors and provide a comfortable space to relax, turning your charging time into a productive and enjoyable break.",
   },
   {
     question: 'How is Power Up Plaza supporting sustainability?',
@@ -40,12 +42,47 @@ const faqItems = [
   },
 ];
 
+// Animation Variants
+const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        ease: 'easeOut',
+      },
+    },
+  };
+  
+const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: 'easeInOut',
+      },
+    },
+  };
+
 export function FAQ() {
+    const { ref, inView } = useInView({
+        triggerOnce: true,
+        threshold: 0.2,
+      });
+
   return (
-    <section className="relative overflow-hidden py-24 sm:py-32">
+    <motion.section
+      ref={ref}
+      variants={containerVariants}
+      initial="hidden"
+      animate={inView ? 'visible' : 'hidden'}
+      className="relative overflow-hidden py-24 sm:py-32"
+    >
       {/* Background Image & Overlay */}
       <Image
-        src="/images/hero-bg.png" // Reusing hero background for a consistent vibe
+        src="/images/hero-bg-green.jpg"
         alt=""
         fill
         className="object-cover"
@@ -53,7 +90,7 @@ export function FAQ() {
         aria-hidden="true"
       />
       <div
-        className="absolute inset-0 bg-[#0A1D1A]/90" // Custom dark green overlay
+        className="absolute inset-0 bg-[#0A1D1A]/90"
         style={{ zIndex: -1 }}
         aria-hidden="true"
       />
@@ -61,7 +98,7 @@ export function FAQ() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto grid max-w-2xl grid-cols-1 items-start gap-x-16 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
           {/* Left Column: Contact Info */}
-          <div className="lg:pr-4 lg:pt-4">
+          <motion.div variants={itemVariants} className="lg:pr-4 lg:pt-4">
             <div className="lg:max-w-lg">
               <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">We are always here for you - always.</h2>
               <p className="mt-6 text-lg leading-8 text-gray-300">
@@ -79,10 +116,10 @@ export function FAQ() {
                 ))}
               </dl>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Column: FAQ Accordion */}
-          <div className="w-full rounded-2xl bg-white p-4">
+          <motion.div variants={itemVariants} className="w-full rounded-2xl bg-white p-4">
             {faqItems.map((item, index) => (
               <Disclosure key={item.question} as="div">
                 {({ open }) => (
@@ -111,10 +148,10 @@ export function FAQ() {
                 )}
               </Disclosure>
             ))}
-          </div>
+          </motion.div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }
 

@@ -1,4 +1,8 @@
+'use client';
+
 import { Zap, Utensils, Users, Leaf } from 'lucide-react';
+import { motion, Variants } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
 
 // Data for the features
 const features = [
@@ -28,23 +32,60 @@ const features = [
   },
 ];
 
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+};
+
+const itemVariants: Variants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.5,
+      ease: "easeInOut",
+    },
+  },
+};
+
 export function WhatWeOffer() {
+  const { ref, inView } = useInView({
+    triggerOnce: true, // The animation will only trigger once
+    threshold: 0.1,    // Trigger when 10% of the component is visible
+  });
+
   return (
-    <section id="features" className="bg-white py-24 sm:py-32">
+    <motion.section
+      id="features"
+      ref={ref}
+      variants={containerVariants}
+      initial="hidden"
+      animate={inView ? "visible" : "hidden"}
+      className="bg-white py-24 sm:py-32"
+    >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto max-w-3xl text-center">
+        <motion.div variants={itemVariants} className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
             What We Offer
           </h2>
           <p className="mt-6 text-lg leading-8 text-gray-600">
             More than just charging, we&apos;re building a community hub for sustainable transportation.
           </p>
-        </div>
+        </motion.div>
 
         {/* Features Grid */}
-        <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 sm:mt-20 lg:max-w-5xl lg:grid-cols-2">
+        <motion.div 
+          variants={containerVariants}
+          className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 sm:mt-20 lg:max-w-5xl lg:grid-cols-2"
+        >
           {features.map((feature) => (
-            <div key={feature.title} className="flex gap-x-6">
+            <motion.div key={feature.title} variants={itemVariants} className="flex gap-x-6">
               <div className={`flex h-16 w-16 flex-none items-center justify-center rounded-lg ${feature.bgColor}`}>
                 {feature.icon}
               </div>
@@ -52,10 +93,11 @@ export function WhatWeOffer() {
                 <h3 className="text-lg font-semibold leading-7 text-gray-900">{feature.title}</h3>
                 <p className="mt-2 text-base leading-7 text-gray-600">{feature.description}</p>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 }
+
