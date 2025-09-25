@@ -1,5 +1,3 @@
-// src/components/Header.jsx
-
 'use client'; 
 
 import { useState } from 'react';
@@ -15,7 +13,7 @@ const navLinks = [
   { name: 'Contact', href: '#contact' },
 ];
 
-const Header = () => {
+export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -25,11 +23,12 @@ const Header = () => {
         {/* Logo */}
         <Link href="/" className="-m-1.5 p-1.5">
           <span className="sr-only">Power Up Plaza</span>
+          {/* THE FIX: Increased width and height for a larger logo */}
           <Image
-            src="/logo.svg"
+            src="/logo.png"
             alt="Power Up Plaza Logo"
-            width={40}
-            height={28}
+            width={160} 
+            height={24}
             priority
           />
         </Link>
@@ -67,8 +66,8 @@ const Header = () => {
                 className="h-8 w-auto"
                 src="/logo.svg"
                 alt=""
-                width={180}
-                height={28}
+                width={160}
+                height={24}
               />
             </Link>
             <button
@@ -100,6 +99,5 @@ const Header = () => {
       </Dialog>
     </header>
   );
-};
+}
 
-export default Header;

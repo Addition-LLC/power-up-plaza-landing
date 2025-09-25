@@ -16,7 +16,7 @@ export function Hero() {
       />
       
       {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/40" aria-hidden="true" />
+      <div className="absolute inset-0 bg-black/20" aria-hidden="true" />
 
       {/* Main Content */}
       <div className="relative z-10 flex flex-col items-center gap-6 px-4 text-center">
@@ -28,9 +28,14 @@ export function Hero() {
           Welcome to Power Up Plaza: <br /> Your Destination for Electric Charging
         </h1>
 
-        <button className="mt-4 rounded-md bg-green-400 px-8 py-3 text-base font-semibold text-white shadow-lg transition-transform hover:scale-105 hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500">
+        <a
+          href="https://www.google.com/maps/search/?api=1&query=West+Garfield+Park,Chicago"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-4 rounded-md bg-green-400 px-8 py-3 text-base font-semibold text-white shadow-lg transition-transform hover:scale-105 hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500"
+        >
           Visit Us Now
-        </button>
+        </a>
 
         <div className="mt-4 flex items-center gap-x-2 text-sm text-gray-300 font-semibold">
           <CalendarDays className="h-4 w-4" />
@@ -50,5 +55,5 @@ export function Hero() {
       </Link>
     </section>
   );
-};
+}
 

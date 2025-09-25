@@ -1,4 +1,4 @@
-import Header from '@/components/Header';
+import { Header } from '@/components/Header';
 import { Hero } from '@/components/Hero';
 import SupportedModels from '@/components/SupportedModel';
 import { GrandOpening } from '@/components/GrandOpening';

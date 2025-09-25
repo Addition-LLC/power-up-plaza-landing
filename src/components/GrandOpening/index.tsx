@@ -63,11 +63,11 @@ export function GrandOpening() {
           <p className="mt-8 text-base leading-7 text-gray-600">
             Don&apos;t miss this exciting event—be among the first to experience our facilities and join the movement towards a greener, more connected community.
           </p>
-          <div className="mt-10">
+          {/* <div className="mt-10">
             <button className="rounded-md bg-green-400 px-8 py-3 text-base font-semibold text-white shadow-lg transition-transform hover:scale-105 hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500">
               RSVP for Grand Opening
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>
